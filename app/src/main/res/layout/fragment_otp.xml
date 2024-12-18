@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- fragment_otp.xml -->
+<!-- fragment_otp.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <!-- Tiêu đề -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nhập mã OTP"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+    <EditText
+        android:id="@+id/et_email_verify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/edittext_bg"/>
+    <!-- Nhập mã OTP -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_otp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mã OTP"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Xác thực OTP -->
+    <Button
+        android:id="@+id/btn_verify_otp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Xác thực OTP"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Gửi lại mã OTP -->
+    <Button
+        android:id="@+id/btn_resend_otp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Gửi lại mã"
+        android:enabled="false"/>
+
+    <!-- Thời gian đếm ngược -->
+    <TextView
+        android:id="@+id/tv_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bạn có thể gửi lại mã sau 1 phút."
+        android:visibility="gone"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>
+

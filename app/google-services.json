@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "134480413283",
+    "project_id": "familymonitoring-e4a8b",
+    "storage_bucket": "familymonitoring-e4a8b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134480413283:android:14e796ed12310ae3c4ee56",
+        "android_client_info": {
+          "package_name": "ctu.demo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvM8tln2I_ya4itEz8HLn8701qfpktMaQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
