@@ -25,18 +25,30 @@ public class OtpUtils {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         long expirationTime = System.currentTimeMillis() + 5 * 60 * 1000; // 5 phút
-        deleteOtp(email); // Xóa OTP cũ nếu có
 
-        Map<String, Object> otpData = new HashMap<>();
-        otpData.put("email", email);
-        otpData.put("otp", otp);
-        otpData.put("expirationTime", expirationTime);
-
+        // Kiểm tra sự tồn tại của OTP trước khi xóa
         db.collection("otps")
                 .document(email)
-                .set(otpData)
-                .addOnSuccessListener(aVoid -> Log.d("OTP", "OTP saved successfully."))
-                .addOnFailureListener(e -> Log.e("OTP", "Error saving OTP: ", e));
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Nếu tài liệu OTP đã tồn tại, xóa nó trước khi lưu OTP mới
+                        deleteOtp(email);
+                    }
+
+                    // Lưu OTP mới
+                    Map<String, Object> otpData = new HashMap<>();
+                    otpData.put("email", email);
+                    otpData.put("otp", otp);
+                    otpData.put("expirationTime", expirationTime);
+
+                    db.collection("otps")
+                            .document(email)
+                            .set(otpData)
+                            .addOnSuccessListener(aVoid -> Log.d("OTP", "OTP saved successfully."))
+                            .addOnFailureListener(e -> Log.e("OTP", "Error saving OTP: ", e));
+                })
+                .addOnFailureListener(e -> Log.e("OTP", "Error checking OTP existence: ", e));
     }
     public static void verifyOtp(String email, String enteredOtp, OnOtpVerificationListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -52,6 +64,7 @@ public class OtpUtils {
                         if (storedOtp != null && storedOtp.equals(enteredOtp)) {
                             if (System.currentTimeMillis() < expirationTime) {
                                 listener.onSuccess();
+                                deleteOtp(email);
                             } else {
                                 listener.onFailure("Mã OTP đã hết hạn.");
                             }

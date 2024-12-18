@@ -74,39 +74,39 @@ public class RegisterFragment extends Fragment {
         }
 
         //send mail chỗ này
-//        String otp = sendVerificationEmail(email);
+        String otp = sendVerificationEmail(email);
 //        //xác thực otp
 //        Toast.makeText(getContext(), "eeeee", LENGTH_SHORT).show();
         //tạo tài khoản
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        // Lấy người dùng hiện tại
-                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("userUid", firebaseUser.getUid());
-                        bundle.putString("fullName", fullName);
-                        bundle.putString("email",email);
-//
-//                        CreateUserFragment userInfoFragment = new CreateUserFragment();
-//                        userInfoFragment.setArguments(bundle);
+//        mAuth.createUserWithEmailAndPassword(email, password)
+//                .addOnCompleteListener(task -> {
+//                    if (task.isSuccessful()) {
+//                        // Lấy người dùng hiện tại
+//                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("userUid", firebaseUser.getUid());
+//                        bundle.putString("fullName", fullName);
+//                        bundle.putString("email",email);
+////
+////                        CreateUserFragment userInfoFragment = new CreateUserFragment();
+////                        userInfoFragment.setArguments(bundle);
+////                        getActivity().getSupportFragmentManager().beginTransaction()
+////                                .replace(R.id.fragment_container, userInfoFragment)
+////                                .addToBackStack(null) // Thêm fragment vào back stack để quay lại được
+////                                .commit();
+//                        OtpFragment otpFragment = OtpFragment.newInstance(email);;
 //                        getActivity().getSupportFragmentManager().beginTransaction()
-//                                .replace(R.id.fragment_container, userInfoFragment)
-//                                .addToBackStack(null) // Thêm fragment vào back stack để quay lại được
+//                                .replace(R.id.fragment_container, otpFragment)
 //                                .commit();
-                        OtpFragment otpFragment = OtpFragment.newInstance(email);;
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, otpFragment)
-                                .commit();
-                    } else {
-                        // Handle specific errors for registration failure
-                        if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                            Toast.makeText(getContext(), "Email này đã được sử dụng.", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getContext(), "Đăng ký thất bại: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+//                    } else {
+//                        // Handle specific errors for registration failure
+//                        if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+//                            Toast.makeText(getContext(), "Email này đã được sử dụng.", Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            Toast.makeText(getContext(), "Đăng ký thất bại: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
     }
 
     private String sendVerificationEmail(String email) {
@@ -118,29 +118,29 @@ public class RegisterFragment extends Fragment {
         //luu ma otp
         OtpUtils.saveOtpToFirestore(email, otp);
         // Sử dụng lớp SendMail để gửi email
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    SendMail.sendEmail(email, subject, message);
-                    // Cập nhật UI sau khi gửi email thành công
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getContext(), "Mã xác thực đã được gửi đến email của bạn.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } catch (Exception e) {
-                    // Cập nhật UI nếu có lỗi xảy ra
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getContext(), "Có lỗi khi gửi email: " + e.getMessage(), LENGTH_LONG).show();
-                        }
-                    });
-                }
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    SendMail.sendEmail(email, subject, message);
+//                    // Cập nhật UI sau khi gửi email thành công
+//                    getActivity().runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Toast.makeText(getContext(), "Mã xác thực đã được gửi đến email của bạn.", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//                } catch (Exception e) {
+//                    // Cập nhật UI nếu có lỗi xảy ra
+//                    getActivity().runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Toast.makeText(getContext(), "Có lỗi khi gửi email: " + e.getMessage(), LENGTH_LONG).show();
+//                        }
+//                    });
+//                }
+//            }
+//        }).start();
         return otp;
     }
 }
